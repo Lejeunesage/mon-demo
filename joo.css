@@ -5,226 +5,64 @@
 }
 
 /*************************************/
-// EXERCICE 1 : Créer une fonction reverse() qui prend une chaine de caractère en argument et retourne cette meme chaine inversée.
+class TodoList {
+    constructor(element) {
+        // élément représente la list non ordonnée
+        this.listElement=element;
+        this.textList= [];
+        this.text=''
 
-// Ex: reverse("hello") ==> olleh;
-
-/*Methode 1 *//*
-reverse = (str) => {
-   return str.split('').reverse().join('');
-    
-}
-console.log("L'inverse de mot 'hello' est ");
-console.log(reverse("MARCOS"));
-
-/*Methode 2 *//*
-
-reverse = (word) => {
-    let arr = [];
-  
-    for (let i = word.length-1; i >= 0; i--) {
-         
-        arr.push(word[i]);
-        
     }
-    return arr.join('');
-}
-console.log("L'inverse de mot 'hello' est ");
-let word = reverse("bonjour")
-console.log(word);
 
-/*Methode 3 *//*
-
-reverse = (word) => {
-    let str = "";
-    for (let i = word.length-1; i >= 0; i--) {
-        str += word[i];
-       
+    static createListItem (text,element) {
+        // text représente le texte à insérer dans un <li>
+            let li = document.createElement("li");
+            li.innerHTML = text;
+           li.style.listStyle = 'none';
+           element.appendChild(li)  ;
     }
-   return str;
-}
-console.log("L'inverse de mot 'hello' est ");
-let str = reverse("marcos")
-console.log(str);*/
 
-
-//## Exercice 1: FirstUpperCase
-// Difficulté: Easy
-
-firstUpperCase = (str) => {
-    let arr = str.split(' ');
-
-    console.log(arr);
-    for (let i = 0; i < arr.length; i++) {
-       arr[i] = (arr[i].charAt(0).toUpperCase()+arr[i].slice(1)).trim();
+    update() {
+        // se charge de mettre à jour la list
+        // Etapes:
+       /*  1 - Retirez tous les éléments <li> de la todo-list
+        2- Insérer les <li> que vous créé à l'aide la méthode static createListIte */
       
+        TodoList.createListItem(this.text, this.listElement)
     }
-    
-    return arr.join(' ')
-}
 
-let toto = firstUpperCase("bonjour la famille");
-console.log(toto);
+    add(text) {
+        this.text=text
+        // se charge d'ajouter le text au tableau "textList" créée dans le constructeur
+        this.textList.push(text)
+        this.update()
+    }
 
-
-
-// ## Exercice 2: LongestWord
-// Difficulté: Easy
-
-
-console.log("les chaussettes de l'archiduchesse");
-
-longestWord = x => x.split(' ').reduce((a,b) => a.length > b.length ? a : b).length;
-
-console.log(longestWord("les chaussettes de l'archiduchesse"));
-
-
-// ## Exercice 3: LargestNumber
-// Difficulté: Easy
-
-
-console.log([156, 851, 138]);
-
-largestWord = array => array.reduce((a,b) => a > b ? a : b);
-
-console.log(largestWord([156, 851, 138]));
-
-
-// ## Exercice 4: ConfirmEnd
-// Difficulté: Easy
-
-
-console.log('lola','a');
-confirmEnd = (str, n) => str.slice(-1) === n;
-
-console.log(confirmEnd("lola",'a'));
-
-
-// ## Exercice 5: Tracage
-// Difficulté: Easy
-
-
-truncate = (str, n) => str.length > n ? str.slice(0, n)+"..." : str;
-
-
-console.log(truncate("bonjour à tous", 5));
-console.log(truncate("salut", 8));
-
-// ## Exercice 6:  Les détectives
-// Difficulté: Easy
-
-
-findElement = (array) => {
-   
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] % 2 === 0) {
-            return array[i];
+    remove(index) {
+        // se charge de retirer un élément de la liste
+        // this.textList.filter(function(e,v){
+        //     return e=e!==(this.textList[index])
+        // })
+        console.log('appel de la méthode remove');
+        let myNodelist = document.getElementsByTagName('li');
+        console.log(myNodelist);
+        for(let i=0; i< myNodelist.length; i++){
+            if(i==index){
+                if (myNodelist[i].parentNode) {
+                    myNodelist[i].parentNode.removeChild(myNodelist[i]);
+                }
+            }
         }
-        else{undefined}
-    }
-  
-}
-    
-let array = [1, 3, 5, 8, 9, 10];
-array2 = [1, 3, 5, 9]
-
-console.log(findElement(array));
-
-// ## Exercice 7: Les perroquets
-// Difficulté: Easy
-
-repeat = (str, n) => str.repeat(n);
-
-console.log(repeat ("abc", 3));
-
-// ## Exercice 8: Factorisation
-// Difficulté: Médium
-
-factorialize = (n) => {
-  
-    if (n === 0) {
-        return 1
-    }else{
-        return factorialize(n-1)*n;
     }
 }
 
-console.log(factorialize(0));
-
-// ## Exercice 9: Téléportation et Fusion
-// Difficulté: Medium
-
-frankenSplice = (arr1, arr2, n) => {
-    let newArray = [];
-    for (let i = 0; i < arr2.length; i++) {
-       newArray.push(arr2[i]);
-        
-    }
-    console.log(newArray);
-    for (let j = 0; j < arr1.length; j++) {
-       newArray.splice(n, 0 , arr1[j]);
-       n++;
-        
-    }
-   
-    return newArray
-}
-
-console.log(frankenSplice([1, 2, 3, 4], [], 0));
-
-// ## Exercice 10: Faux Videurs
-// Difficulté: Medium
-
-bouncer = (array) => {
-    let newArray = [];
-    for (let i = 0; i < array.length; i++) {
-        
-        if (array[i] == false || array[i] == null || array[i] == undefined || array[i] == NaN  || array[i] == '') {
-            
-            array.splice(i, 1);
-           
-        } 
-        else{
-           
-            newArray.push(array[i]);
-        }
-            
-    }
-    return newArray;
-}
-
-let tab = [null, NaN, 1, 2, undefined]
-console.log(bouncer(tab));
-
-
-// ## Exercice 11: Où devrais-je être
-// Difficulté: Moyenne
-
-
-getIndexToIns = (arr, n) => {
-    arr.push(n);
-   
-    let array = arr.sort((a,b) => a - b);
-    return array.indexOf(n);
-}
-
-console.log(getIndexToIns([10, 20, 30, 40, 50], 35));
-console.log(getIndexToIns([], 1));
-
-
-// ## Exercice 12: Mutation
-// Difficulté: Medium
-
-
-mutation = (array) => {
-
-
-    array.every(v => v.includes(v))
-    console.log(v);
-};
-
-
-console.log(mutation(["hello", "Hello"]) );
-console.log(mutation(["Noel", "Ole"]));
-console.log(mutation(["hello", "neo"]));
-console.log(mutation(["voodoo", "no"]));
+let list=document.getElementById('myList')
+const todoApp = new TodoList(list)
+console.log(todoApp);
+todoApp.add("Tache à faire 1");
+todoApp.add("Tache à faire 2");
+// todoApp.add("Tache à faire 3");
+// todoApp.add("Tache à faire 4");
+// todoApp.add("Tache à faire 5");
+todoApp.remove(1)
+// console.log(todoApp.textList);
